@@ -54,7 +54,14 @@ class AuthController extends Controller
              $validuser = User::where('id', $user->id)->where('otp_verified', true)->first();   
              
              if ($validuser) {
-                 return redirect()->intended('dashboard');
+                if ($validuser) {
+                    // Check if the user is admin or user based on the model methods
+                    if ($validuser->isAdmin()) {
+                        return redirect()->intended('admin'); // Redirect to admin dashboard
+                    } elseif ($validuser->isUser()) {
+                        return redirect()->intended('user'); // Redirect to user dashboard
+                    }
+                }
              }
      
              Otp::where('user_id', $user->id)->delete();
