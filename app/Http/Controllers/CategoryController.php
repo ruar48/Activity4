@@ -24,7 +24,7 @@ class CategoryController extends Controller
             'category_name' => $request->category_name,
         ]);
 
-        return redirect()->route('admin.category')->with('success', 'Category created successfully.');
+        return redirect()->route('category')->with('success', 'Category created successfully.');
     }
 
     public function edit($id)
