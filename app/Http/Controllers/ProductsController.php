@@ -26,13 +26,16 @@ class ProductsController extends Controller
             'stock_quantity' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Optional image validation
         ]);
-
-        // Handle file upload
+    
+        // Handle file upload without storage link
         $imagePath = null;
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images'), $imageName);
+            $imagePath = 'images/' . $imageName;
         }
-
+    
+        // Create the product
         Products::create([
             'category_id' => $request->category_id,
             'product_name' => $request->product_name,
@@ -41,7 +44,7 @@ class ProductsController extends Controller
             'stock_quantity' => $request->stock_quantity,
             'image' => $imagePath,
         ]);
-
+    
         return redirect()->route('admin.products')->with('success', 'Product created successfully.');
     }
 
