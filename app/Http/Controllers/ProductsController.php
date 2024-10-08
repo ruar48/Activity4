@@ -74,17 +74,22 @@ class ProductsController extends Controller
             'stock_quantity' => 'required|integer',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        // Handle file upload
+    
+        // Handle file upload without storage link
         $imagePath = $product->image; // Default to existing image
         if ($request->hasFile('image')) {
-            // Delete the old image if exists
-            if ($imagePath) {
-                Storage::disk('public')->delete($imagePath);
+            // Delete the old image if it exists
+            if ($imagePath && file_exists(public_path($imagePath))) {
+                unlink(public_path($imagePath));
             }
-            $imagePath = $request->file('image')->store('images', 'public');
+    
+            // Save the new image
+            $imageName = time() . '-' . $request->file('image')->getClientOriginalName();
+            $request->file('image')->move(public_path('images'), $imageName);
+            $imagePath = 'images/' . $imageName;
         }
-
+    
+        // Update product details
         $product->update([
             'category_id' => $request->category_id,
             'product_name' => $request->product_name,
@@ -93,9 +98,10 @@ class ProductsController extends Controller
             'stock_quantity' => $request->stock_quantity,
             'image' => $imagePath,
         ]);
-
+    
         return redirect()->route('admin.products')->with('success', 'Product updated successfully.');
     }
+    
 
     public function delete($id)
     {
