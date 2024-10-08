@@ -8,6 +8,9 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductsController; 
 use App\Http\Controllers\ChartCotroller; 
 
+Route::get('/symlink', function () {
+    Artisan::call('storage:link');
+});
 Route::get('/', function () {
     return view('login');
 });
