@@ -95,7 +95,7 @@
                         @if((isset($deleteProduct) && $deleteProduct->image) || (isset($product) && $product->image))
                         <div class="mb-3">
                             <label>Current Image:</label>
-                            <img src="{{ asset('storage/' . (isset($deleteProduct) ? $deleteProduct->image : $product->image)) }}" alt="{{ (isset($deleteProduct) ? $deleteProduct->product_name : $product->product_name) }}" class="img-thumbnail" style="max-width: 150px;">
+                            <img src="{{ asset((isset($deleteProduct) ? $deleteProduct->image : $product->image)) }}" alt="{{ (isset($deleteProduct) ? $deleteProduct->product_name : $product->product_name) }}" class="img-thumbnail" style="max-width: 150px;">
                         </div>
                     @endif
                     
@@ -157,7 +157,7 @@
                                     <td>{{ $product->stock_quantity }}</td>
                                     <td>
                                         @if($product->image)
-                                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->product_name }}" class="img-thumbnail" style="max-width: 100px;">
+                                            <img src="{{ asset($product->image) }}" alt="{{ $product->product_name }}" class="img-thumbnail" style="max-width: 100px;">
                                         @else
                                             No Image
                                         @endif
