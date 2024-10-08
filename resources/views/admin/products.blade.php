@@ -9,8 +9,8 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Product Form Section -->
-        <div class="col-md-4">
-            <div class="card shadow mb-4">
+        <div class="col-lg-4 col-md-12 mb-4">
+            <div class="card shadow">
                 <div class="card-header bg-light">
                     {{ isset($product) ? (isset($deleteProduct) ? 'Delete Product' : 'Edit Product') : 'Add Product' }}
                 </div>
@@ -18,15 +18,15 @@
                     @if(isset($deleteProduct))
                     <form action="{{ route('products.destroy', $deleteProduct->id) }}" method="POST">
                         @method('DELETE')
-                @elseif(isset($product))
+                    @elseif(isset($product))
                     <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
-                @else
+                    @else
                     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-                @endif
-                
+                    @endif
+                    
                         @csrf
-        
+            
                         <!-- Category Select Field -->
                         <div class="mb-3">
                             <label for="category_id" class="form-label">Category <span class="text-danger">*</span></label>
@@ -42,7 +42,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-        
+            
                         <!-- Product Name Field -->
                         <div class="mb-3">
                             <label for="product_name" class="form-label">Product Name <span class="text-danger">*</span></label>
@@ -53,7 +53,6 @@
                             @enderror
                         </div>
                         
-                        
                         <!-- Description Field -->
                         <div class="mb-3">
                             <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
@@ -62,7 +61,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-        
+            
                         <!-- Price Field -->
                         <div class="mb-3">
                             <label for="price" class="form-label">Price <span class="text-danger">*</span></label>
@@ -72,7 +71,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-        
+            
                         <!-- Stock Quantity Field -->
                         <div class="mb-3">
                             <label for="stock_quantity" class="form-label">Stock Quantity <span class="text-danger">*</span></label>
@@ -82,7 +81,7 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-        
+            
                         <div class="mb-3">
                             <label for="image" class="form-label">Image</label>
                             <input type="file" class="form-control" id="image" name="image" onchange="previewImage(event)" {{ isset($deleteProduct) ? 'disabled' : '' }}>
@@ -90,16 +89,15 @@
                                 <small class="text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-        
+            
                         <!-- Image Preview -->
                         @if((isset($deleteProduct) && $deleteProduct->image) || (isset($product) && $product->image))
                         <div class="mb-3">
                             <label>Current Image:</label>
                             <img src="{{ asset((isset($deleteProduct) ? $deleteProduct->image : $product->image)) }}" alt="{{ (isset($deleteProduct) ? $deleteProduct->product_name : $product->product_name) }}" class="img-thumbnail" style="max-width: 150px;">
                         </div>
-                    @endif
-                    
-        
+                        @endif
+            
                         <!-- Action Buttons Section -->
                         <div class="d-flex justify-content-between mt-3">
                             @if(isset($deleteProduct))
@@ -119,10 +117,9 @@
                 </div>
             </div>
         </div>
-        
 
         <!-- Product List Section -->
-        <div class="col-md-8">
+        <div class="col-lg-8 col-md-12">
             <div class="card shadow mb-4">
                 <div class="card-header bg-light">
                     Product List
@@ -131,7 +128,7 @@
                     @if (session('success'))
                         <div class="alert alert-success">{{ session('success') }}</div>
                     @endif
-                    <table class="table table-bordered">
+                    <table class="table table-bordered table-responsive">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -150,7 +147,7 @@
                                     <td>{{ $product->product_name }}
                                         <small>
                                         <p class="mb-0"><b>Description:</b> {{ $product->description }}</p> <!-- Added description here -->
-                                    </small>
+                                        </small>
                                     </td>
                                     <td>{{ $product->category->category_name }}</td>
                                     <td>${{ number_format($product->price, 2) }}</td>
@@ -171,7 +168,6 @@
                                                 <i class="fas fa-trash"></i>
                                             </a>
                                         </div>
-                     
                                     </td>
                                 </tr>
                             @endforeach

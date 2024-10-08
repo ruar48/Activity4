@@ -10,7 +10,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- Category Form Section -->
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header bg-light">
                     {{ isset($editCategory) ? 'Edit Category' : (isset($deleteCategory) ? 'Delete Category' : 'Add Category') }}
@@ -55,10 +55,9 @@
                 </div>
             </div>
         </div>
-        
 
         <!-- Data Table Section -->
-        <div class="col-md-8">
+        <div class="col-lg-8 col-md-6 col-sm-12">
             <div class="card shadow mb-4">
                 <div class="card-header bg-light">
                     <h5 class="mb-0">Categories List</h5>
@@ -74,37 +73,39 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <table class="table table-bordered table-hover" id="example">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Category Name</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($categories as $category)
-                            <tr>
-                                <td>{{ $category->id }}</td>
-                                <td>{{ $category->category_name }}</td>
-                                <td>
-                                    <div class="d-flex justify-content-start">
-                                        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary me-2" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('categories.delete', $category->id) }}" class="btn btn-sm btn-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="3" class="text-center">No categories found.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="example">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Category Name</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($categories as $category)
+                                <tr>
+                                    <td>{{ $category->id }}</td>
+                                    <td>{{ $category->category_name }}</td>
+                                    <td>
+                                        <div class="d-flex justify-content-start">
+                                            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-sm btn-primary me-2" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{{ route('categories.delete', $category->id) }}" class="btn btn-sm btn-danger" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">No categories found.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -121,7 +122,7 @@
                 "zeroRecords": "No matching records found",
                 "info": "Showing page _PAGE_ of _PAGES_",
                 "infoEmpty": "No records available",
-                "infoFiltered": "(filtered from _MAX total records)"
+                "infoFiltered": "(filtered from _MAX_ total records)"
             }
         });
     });

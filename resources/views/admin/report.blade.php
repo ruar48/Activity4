@@ -12,15 +12,15 @@
 
     <div class="row">
         <!-- Category Count Bar Chart -->
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12 mb-4">
             <h4 class="mb-3">Products per Category</h4>
-            <div id="productsPerCategoryChart"></div>
+            <div id="productsPerCategoryChart" style="max-width: 100%;"></div>
         </div>
 
         <!-- Category Distribution Pie Chart -->
-        <div class="col-md-6">
+        <div class="col-md-6 col-sm-12 mb-4">
             <h4 class="mb-3">Category Distribution</h4>
-            <div id="categoryChart"></div>
+            <div id="categoryChart" style="max-width: 100%;"></div>
         </div>
     </div>
 
@@ -39,7 +39,10 @@
         const productsPerCategoryOptions = {
             chart: {
                 type: 'bar',
-                height: 350
+                height: 350,
+                toolbar: {
+                    show: false
+                }
             },
             xaxis: {
                 categories: @json($categories->pluck('category_name')),
@@ -66,7 +69,10 @@
         const categoryPieOptions = {
             chart: {
                 type: 'pie',
-                height: 350
+                height: 350,
+                toolbar: {
+                    show: false
+                }
             },
             labels: @json($categories->pluck('category_name')),
             series: @json($categories->pluck('products_count')),

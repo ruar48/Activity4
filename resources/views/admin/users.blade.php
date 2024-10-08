@@ -10,7 +10,7 @@
 <div class="container mt-4">
     <div class="row">
         <!-- User Form Section -->
-        <div class="col-md-4">
+        <div class="col-md-12 col-lg-4">
             <div class="card shadow mb-4">
                 <div class="card-header bg-light">
                     {{ isset($editUser) ? 'Edit User' : (isset($deleteUser) ? 'Delete User' : 'Add User') }}
@@ -74,6 +74,7 @@
                             @enderror
                         </div>
                         
+                        <!-- Account Status Field -->
                         <div class="mb-3">
                             <label for="is_active" class="form-label">Account Status <span class="text-danger">*</span></label>
                             <select class="form-control" id="is_active" name="is_active" required {{ isset($deleteUser) ? 'disabled' : '' }}>
@@ -86,9 +87,7 @@
                             @enderror
                         </div>
                         
-                        
-                        
-                        <!-- Action Buttons Section (Update, Cancel, Delete) -->
+                        <!-- Action Buttons Section -->
                         <div class="d-flex justify-content-between mt-3">
                             <!-- Update Button -->
                             <button type="submit" class="btn btn-success">
@@ -101,14 +100,13 @@
                             </a>
                             @endif
                         </div>
-        
                     </form>
                 </div>
             </div>
         </div>
         
         <!-- Data Table Section -->
-        <div class="col-md-8">
+        <div class="col-md-12 col-lg-8">
             <div class="card shadow mb-4">
                 <div class="card-header bg-light">
                     <h5 class="mb-0">Users List</h5>
@@ -124,57 +122,55 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    <table class="table table-bordered table-hover" id="example">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Account Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($users as $user)
-                            <tr>
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ ucfirst($user->role) }}</td>
-                                <td>
-                                    @if($user->is_active)
-                                        <span class="badge bg-success"><i class="fas fa-check-circle"></i> Active</span>
-                                    @else
-                                        <span class="badge bg-secondary"><i class="fas fa-times-circle"></i> Inactive</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="d-flex justify-content-start">
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary me-2" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </a>
-                                        <a href="{{ route('users.delete', $user->id) }}" class="btn btn-sm btn-danger" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
-                                    </div>
-                                    
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="6" class="text-center">No users found.</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover" id="example">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Account Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($users as $user)
+                                <tr>
+                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email }}</td>
+                                    <td>{{ ucfirst($user->role) }}</td>
+                                    <td>
+                                        @if($user->is_active)
+                                            <span class="badge bg-success"><i class="fas fa-check-circle"></i> Active</span>
+                                        @else
+                                            <span class="badge bg-secondary"><i class="fas fa-times-circle"></i> Inactive</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-start">
+                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-primary me-2" title="Edit">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="{{ route('users.delete', $user->id) }}" class="btn btn-sm btn-danger" title="Delete">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">No users found.</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        
-     
-
-         
     </div>
 </div>
 
@@ -182,7 +178,6 @@
 <script>
     $(document).ready(function() {
         $('#example').DataTable({
-            // Customize DataTables options if needed
             "language": {
                 "search": "Filter records:",
                 "lengthMenu": "Display _MENU_ records per page",
